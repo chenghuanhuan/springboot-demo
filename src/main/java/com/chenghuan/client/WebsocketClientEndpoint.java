@@ -5,7 +5,9 @@
 package com.chenghuan.client;
 
 import javax.websocket.*;
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * @author chenghuanhuan@qccr.com
@@ -18,10 +20,26 @@ public class WebsocketClientEndpoint {
     Session userSession = null;
     private MessageHandler messageHandler;
 
+    private int id ;
+    public WebsocketClientEndpoint(int id) {
+        this.id= id;
+    }
+
+    public boolean start(){
+        WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+        try {
+            userSession = container.connectToServer(this,new URI("ws://localhost:9090"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     public WebsocketClientEndpoint(URI endpointURI) {
         try {
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-            container.connectToServer(this, endpointURI);
+           userSession= container.connectToServer(this, endpointURI);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

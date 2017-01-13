@@ -38,4 +38,30 @@ public class ClientThread implements Runnable {
             e.printStackTrace();
         }
     }
+
+    public static void main(String[] args) {
+        for (int i=0;i<50000;i++) {
+            WebsocketClientEndpoint clientEndPoint = null;
+            try {
+                clientEndPoint = new WebsocketClientEndpoint(i);
+                if(!clientEndPoint.start()){
+                    System.err.println("最大在线人数:"+i);
+                    break;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (clientEndPoint != null) {
+                // add listener
+                clientEndPoint.addMessageHandler(new WebsocketClientEndpoint.MessageHandler() {
+                    public void handleMessage(String message) {
+                        System.out.println(message);
+                    }
+                });
+            }
+
+            // send message to websocket
+            clientEndPoint.sendMessage("{'event':'addChannel','channel':'ok_btccny_ticker'}");
+        }
+    }
 }

@@ -18,7 +18,8 @@
     针对application.properties和application.yml的资源过滤
    -->
   <properties>
-    <java.version>1.8</java.version>
+    <java.version>1.7</java.version>
+    <start-class>com.chenghuan.web.WebSocketConfig</start-class>
   </properties>
   <parent>
     <groupId>org.springframework.boot</groupId>

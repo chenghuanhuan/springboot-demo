@@ -12,18 +12,20 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * @author chenghuanhuan@qccr.com
  * @since $Revision:1.0.0, $Date: 2016年12月26日 下午6:37 $
  */
-@ServerEndpoint("/websocket")
+@ServerEndpoint("/")
 @Component
 public class MyWebSocket {
     private static int onlineCount = 0;
 
-    private static CopyOnWriteArraySet<MyWebSocket> webSocketSet = new CopyOnWriteArraySet<>();
+    private static List<MyWebSocket> webSocketSet = new ArrayList<>(1000);
 
     private Session session;
 
